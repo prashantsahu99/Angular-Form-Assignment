@@ -1,0 +1,8 @@
+.navbar{
+    display: flex;
+    justify-content:center;
+}
+h2{
+    align-items: left;
+    float:left;
+}

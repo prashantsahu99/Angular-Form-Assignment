@@ -1,0 +1,121 @@
+<div class="container-fluid text-center bg-dark text-white w-25 rounded mt-3 " [class.d-none]="show" >
+    <div class="row"> 
+        <h1 class="mt-3">Sign In</h1>
+        <form #signIn="ngForm" (ngSubmit)="SubmitForm()" class="p-2">
+            
+            <div class="form-group m-3">
+                <input type="text" required #username="ngModel" [(ngModel)]="Sign.username" pattern="[a-zA-Z][a-zA-Z ]+" 
+                name="userName" placeholder="Username" class="form-control"
+                [class.is-invalid]="signIn.submitted && username.invalid">
+                <div *ngIf="signIn.submitted && username.invalid && username.errors">
+                    <small *ngIf="username.errors['required']">Username required </small>
+                    <small *ngIf="username.errors['pattern']">Username is invalid</small>
+                </div>
+            </div>
+            <div class="form-group m-3">
+                <input type="password" #password="ngModel" [(ngModel)]="Sign.password" name="password" required 
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" placeholder="Password" class="form-control"
+                [class.is-invalid]="signIn.submitted && password.invalid">
+                <div *ngIf="signIn.submitted && password.errors && password.invalid">
+                    <small *ngIf="password.errors['required']">Password is required</small>
+                    <small *ngIf="password.errors['pattern']">Pattern Not matched</small>
+                </div>
+            </div>
+            <div class="form-group m-3 mt-5">
+                <button type="submit" class="rounded form-control bg-success text-white">Sign In</button>
+            </div>
+            <div class="form-group m-3 ">
+                <h6>If not Register</h6>
+                <button type="button" class="rounded form-control bg-success text-white" (click)="Signup()" >Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="container-fluid text-center bg-dark text-white w-25 rounded mt-3 mb-3" [class.d-none]="!show" >
+    <div class="row ">
+        <h1 class="mt-3">Sign Up</h1>
+        <form #userForm="ngForm" (ngSubmit)="submitdata()"  class="p-2">
+            <!-- {{userForm.form.valid}} -->
+            <div class="form-group m-3">
+                <input type="text" required pattern="[a-zA-Z][a-zA-Z ]+" #name="ngModel" [(ngModel)]="User.name" 
+                placeholder="Name" class="form-control" name="name"
+                [class.is-invalid]="userForm.submitted && name.invalid">
+                <div *ngIf="userForm.submitted && name.invalid && name.errors">
+                    <small *ngIf="name.errors['required']">Name required </small>
+                    <small *ngIf="name.errors['pattern']">Name is invalid</small>
+                </div>
+            </div>
+            <div class="form-group m-3">
+                <input type="text" required pattern="[a-zA-Z][a-zA-Z ]+" name="fname" #fname="ngModel" 
+                [(ngModel)]="User.fname" placeholder=" Father's Name" class="form-control"
+                [class.is-invalid]="userForm.submitted && fname.invalid">
+                <div *ngIf="userForm.submitted && fname.invalid && fname.errors">
+                    <small *ngIf="fname.errors['required']">Father's Name required</small>
+                    <small *ngIf="fname.errors['pattern']">Father's Name is invalid</small>
+                </div>
+                
+            </div>
+            <div class="form-group m-3">
+                <input type="email" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
+                name="mail" #mail="ngModel" [(ngModel)]="User.email" placeholder="Email" class="form-control"
+                [class.is-invalid]="userForm.submitted && mail.invalid">
+                <div *ngIf="mail.errors && userForm.submitted && mail.invalid">
+                    <small *ngIf="mail.errors['required']">Email required</small>
+                    <small *ngIf="mail.errors['pattern']">Email is invalid</small>
+                </div>
+            </div>
+            <div class="form-group m-3">
+                <input type="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" 
+                name="pass" #pass="ngModel" [(ngModel)]="User.pass" placeholder="Password" class="form-control"
+                [class.is-invalid]="userForm.submitted && pass.invalid" >
+                <div *ngIf="userForm.submitted && pass.errors && pass.invalid">
+                    <small *ngIf="pass.errors['required']">Password is required</small>
+                    <small *ngIf="pass.errors['pattern']">Pattern Not matched</small>
+                </div>
+            </div>
+            <div class="form-group m-3">
+                <input type="tel" required pattern="^((\+91-?)|0)?[0-9]{10}$" name="mobile" #mobile="ngModel" 
+                [(ngModel)]="User.mobile" placeholder="Mobile No." class="form-control"
+                [class.is-invalid]="userForm.submitted && mobile.invalid ">
+                <div *ngIf="userForm.submitted && mobile.invalid && mobile.errors">
+                    <small *ngIf="mobile.errors['required']">Mobile No. required</small>
+                    <small *ngIf="mobile.errors['pattern']">Mobile No. invalid</small>
+                </div>
+            </div>
+            <div class="form-group m-3 ">
+                <button type="submit" class="rounded form-control bg-success text-white" [class.d-none]="buttonshow" >Submit</button>
+                <button type="button" class="rounded form-control bg-success text-white mb-1" (click)="reset()" [class.d-none]="!buttonshow" >Reset</button>
+                <button type="button" class="rounded form-control bg-success text-white" (click)="addItem()" [class.d-none]="!buttonshow" >Add Data</button>
+            </div>
+            <div class="form-group m-3 ">
+                <button type="button" class="rounded form-control bg-success text-white"(click)="SignIn()" >Sign In</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row  text-center" [class.d-none]="!show">
+    <h2> Sign Up Form Data</h2>
+    <table class="table table-bordered text-center table-dark">
+        <thead>
+            <tr>
+            <th>Name</th>
+            <th>Father's Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Mobile No</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listData">
+                <td> <span>{{item.name}}</span></td>
+                <td> <span>{{item.fname}}</span></td>
+                <td> <span>{{item.mail}}</span></td>
+                <td> <span>{{item.pass}}</span></td>
+                <td> <span>{{item.mobile}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

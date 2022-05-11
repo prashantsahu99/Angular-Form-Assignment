@@ -1,0 +1,132 @@
+<div class="container-fluid text-center row ">
+    <h2 class="m-4">Registration Form</h2>
+    <div class="col-3"></div>
+    <div class="col-6 m-3 mt-2 border border-dark bg-info rounded">
+        <form  [formGroup]="registrationForm" (ngSubmit)="submitForm(registrationForm,localForm)" #localForm="ngForm">
+
+            <!-- {{registrationForm.value | json}} -->
+            <div class="row mb-3 mt-3">
+                <div class="col-3">
+                    <label>Name :</label>
+                </div>
+                <div class="col-9">
+                    <input type="text"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('name')?.invalid"
+                    formControlName="name" class="form-control">
+                    <div  *ngIf="localForm.submitted && registrationForm.get('name')?.invalid">
+                        <small class="text-danger" *ngIf="registrationForm.get('name')?.hasError('required')">Name is required</small>
+                        <small class="text-danger" *ngIf="registrationForm.get('name')?.hasError('minlength')">Name must be of 3 character</small>
+                        <small class="text-danger" *ngIf="registrationForm.get('name')?.hasError('pattern')">Name is invalid</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label for="name">College :</label>
+                </div>
+                <div class="col-9">
+                    <input type="text" formControlName="college"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('college')?.invalid" class="form-control">
+                    <div  *ngIf="localForm.submitted && registrationForm.get('college')?.invalid">
+                        <small class="text-danger" *ngIf="registrationForm.get('college')?.hasError('required')">College is required</small>
+                        <small class="text-danger" *ngIf="registrationForm.get('college')?.hasError('pattern')">College is invalid</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mb-3">
+                    <label for="">CGPA :</label>
+                </div>
+                <div class="col-9">
+                    <input type="text" formControlName="cgpa"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('cgpa')?.invalid" class="form-control">
+                    <div  *ngIf="localForm.submitted && registrationForm.get('cgpa')?.invalid">
+                        <small class="text-danger" *ngIf="registrationForm.get('cgpa')?.hasError('required')">CGPA is required</small>
+                        <small class="text-danger" *ngIf="registrationForm.get('cgpa')?.hasError('pattern')">CGPA invalid</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mb-3">
+                    <label for="">Year of Passing :</label>
+                </div>
+                <div class="col-9">
+                    <input type="text" formControlName="yearofpass"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('yearofpass')?.invalid" class="form-control">
+                    <div  *ngIf="localForm.submitted && registrationForm.get('yearofpass')?.invalid">
+                        <small class="text-danger" *ngIf="registrationForm.get('yearofpass')?.hasError('required')">year is required</small>
+                        <small class="text-danger" *ngIf="registrationForm.get('yearofpass')?.hasError('pattern')">year invalid</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mb-3">
+                    <label for="">Date of Joining Office :</label>
+                </div>
+                <div class="col-9">
+                    <input type="date" formControlName="dateofjoin"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('dateofjoin')?.invalid" class="form-control">
+                    <div class="invalid-feedback">Date of join required</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mb-3">
+                    <label for="">Skills :</label>
+                </div>
+                <div class="col-9">
+                    <input type="text" formControlName="skill"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('skill')?.invalid" class="form-control">
+                    <div class="invalid-feedback">Skills Required</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mb-3">
+                    <label for="">Upload Resume :</label>
+                </div>
+                <div class="col-9">
+                    <input type="file" formControlName="resume" accept=".pdf"
+                    [class.is-invalid]="localForm.submitted && registrationForm.get('college')?.invalid" class="form-control">
+                    <div class="invalid-feedback">Resume must required</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mb-3 " >
+                    <button type="submit" class="text-dark rounded" [class.d-none]="!show" >Submit</button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="text-dark rounded" [class.d-none]="show" (click)="reset()" >Reset</button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="text-dark rounded" (click)="addItem()" [class.d-none]="show">Add Row</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row text-center m-3 ">
+        <h2>Form Data</h2>
+        <table class="table table-bordered text-center table-dark m-2">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>College</th>
+                <th>CGPA</th>
+                <th>Year Of Passing</th>
+                <th>Date of Joining</th>
+                <th>Skills</th>
+                <th>Resume</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listData">
+                    <td> <span>{{item.name}}</span></td>
+                    <td> <span>{{item.college}}</span></td>
+                    <td> <span>{{item.cgpa}}</span></td>
+                    <td> <span>{{item.yearofpass}}</span></td>
+                    <td> <span>{{item.dateofjoin}}</span></td>
+                    <td> <span>{{item.skill}}</span></td>
+                    <td> <a href="http://{{item.resume}}" target="_blank">Link</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
